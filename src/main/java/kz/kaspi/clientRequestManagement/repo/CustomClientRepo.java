@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-@Repository("customClientRepo")
+@Repository
 public class CustomClientRepo implements ClientRepo {
 
     @Autowired
@@ -24,12 +24,12 @@ public class CustomClientRepo implements ClientRepo {
     public <S extends Client> S clientSave(S s) throws ClientException {
         s.setAbbr(BaseUtils.getAbbr(s.getOrganization())); //Gets the abbreviation from organization and initiating it to abbr field
         if (!BaseUtils.isPhoneValid(s.getPhone())) {//Assuming that valid phone number starts with 87 after has 9 digits
-            throw new ClientException("Phone number is invalid");
+            throw new ClientException(ClientException.INVALID_PHONE);
         }
         s.setHashCode(BaseUtils.getHashCode(s));
         Client client = clientRepo.findByHashCode(s.getHashCode());
         if (client != null) {
-            throw new ClientException("This client already has been inserted");
+            throw new ClientException(ClientException.ALREADY_EXISTS);
         }
         return clientRepo.save(s);
     }

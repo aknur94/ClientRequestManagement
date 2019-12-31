@@ -37,17 +37,16 @@ public class ClientController {
     }
 
     @PutMapping("/{id}")
-    public Client editClient(@RequestBody Client client, @PathVariable Long id) {
+    public ResponseEntity editClient(@RequestBody Client client, @PathVariable Long id) {
         Client editClient = clientRepo.findById(id).orElse(client);
         editClient.setPhone(client.getPhone());
         editClient.setFio(client.getFio());
         editClient.setOrganization(client.getOrganization());
         editClient.setBin(client.getBin());
         try {
-            return clientRepo.clientSave(editClient);
+            return ResponseEntity.ok(clientRepo.clientSave(editClient));
         } catch (ClientException e) {
-            e.printStackTrace();
-            return null;
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 

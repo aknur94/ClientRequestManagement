@@ -1,6 +1,10 @@
 package kz.kaspi.clientRequestManagement.exception;
 
 public class ClientException extends Exception {
+
+    public final static String INVALID_PHONE = "Phone number is invalid";
+    public final static String ALREADY_EXISTS = "This client already has been inserted";
+
     public ClientException() {
         super();
     }

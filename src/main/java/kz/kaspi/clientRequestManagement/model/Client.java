@@ -1,6 +1,5 @@
 package kz.kaspi.clientRequestManagement.model;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
